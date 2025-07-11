@@ -8669,8 +8669,8 @@
         "Height": 524
       },
       "WindowLocation": {
-        "X": 1,
-        "Y": 76
+        "X": 61,
+        "Y": 177
       },
       "WindowIsMaximized": false
     },
@@ -9765,6 +9765,22 @@
     "Items": [
       {
         "RomFile": {
+          "Path": "C:\\Neumont\\Year Three\\QuarterFour\\PRO385-Game Engine Projects\\nes-dev\\projects\\src/game.nes",
+          "InnerFile": "",
+          "InnerFileIndex": 0
+        },
+        "PatchFile": null
+      },
+      {
+        "RomFile": {
+          "Path": "C:\\Neumont\\Year Three\\QuarterFour\\PRO385-Game Engine Projects\\nes-dev\\projects\\src/controller.nes",
+          "InnerFile": "",
+          "InnerFileIndex": 0
+        },
+        "PatchFile": null
+      },
+      {
+        "RomFile": {
           "Path": "C:\\Neumont\\Year Three\\QuarterFour\\PRO385-Game Engine Projects\\nes-dev\\projects\\src/sprites.nes",
           "InnerFile": "",
           "InnerFileIndex": 0
@@ -9871,8 +9887,8 @@
       "Height": 665
     },
     "WindowLocation": {
-      "X": 1472,
-      "Y": 158
+      "X": 1221,
+      "Y": 175
     },
     "WindowIsMaximized": false
   },

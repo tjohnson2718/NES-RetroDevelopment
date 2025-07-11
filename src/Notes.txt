@@ -1,0 +1,52 @@
+.proc init_sprites
+
+  set_sprite oam, 0, 10, 0, (SPRITE_PALETTE_0), 10
+  set_sprite oam, 1, 10, 1, (SPRITE_PALETTE_0), 18
+  set_sprite oam, 2, 18, 2, (SPRITE_PALETTE_0), 10
+  set_sprite oam, 3, 18, 3, (SPRITE_PALETTE_0), 18
+  set_sprite oam, 4, 26, 4, (SPRITE_PALETTE_0), 10
+  set_sprite oam, 5, 26, 5, (SPRITE_PALETTE_0), 18
+  set_sprite oam, 6, 34, 6, (SPRITE_PALETTE_0), 10
+  set_sprite oam, 7, 34, 7, (SPRITE_PALETTE_0), 18
+
+  RTS
+.endproc
+
+.proc update_sprites
+    ; Update OAM values
+    ; Move the oam diagonal across the screen
+    LDX #$00 ;X = num of sprites (0 to 7)
+    @loop:
+      ; Each sprite is 4 bytes so sprite X = oam + (X * 4)
+      ; Calculate addresses of Y and X for sprite
+      LDA oam, X  ;Load Y
+      CLC
+      ADC #1      ;Add 1 to move down
+      STA oam, X  ;Store back the new Y
+
+      INX         ;Move to Tile index
+      INX         ;Skip the attributes
+      INX         ;X position is 4th byte (offset +3)
+
+      LDA oam, X  ;Load X
+      CLC
+      ADC #1      ;Add 1 to move right
+      STA oam, X  ;Store back the new X
+
+      INX         ;Move to the next Sprite (Y of the next sprite)
+
+      CPX #32     ;Check if we have done 8 sprites (8 * 4 = 32)
+      BNE @loop
+
+    ; Set OAM address to 0 — required before DMA or manual OAM writes
+    LDA #$00
+    STA PPU_SPRRAM_ADDRESS    ; $2003 — OAM address register
+
+    ; Start OAM DMA transfer (copies 256 bytes from oam → PPU OAM)
+    ; Write the high byte of the source address (e.g., $02 for $0200)
+    LDA #>oam
+    STA SPRITE_DMA            ; $4014 — triggers OAM DMA (513–514 cycles, CPU stalled)
+
+    RTS
+
+.endproc
